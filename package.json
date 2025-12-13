@@ -3,24 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev:test": "cp .env.test .env && next dev",
+    "dev:prod": "cp .env.production .env && next dev",
+    "build:test": "cp .env.test .env && next build",
+    "build:prod": "cp .env.production .env && next build",
+    "export:test": "cp .env.test .env && next build",
+    "export:prod": "cp .env.production .env && next build",
     "lint": "eslint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.1",
+    "i18next": "^25.7.2",
     "next": "16.0.10",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "react-i18next": "^16.5.0",
+    "react-redux": "^9.2.0",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/styled-components": "^5.1.36",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

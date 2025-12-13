@@ -1,8 +1,7 @@
 'use client'
 
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
-
+import { EnvIndicator } from '@/components/Basic/EnvIndicator'
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
@@ -29,14 +28,20 @@ const Title = styled.h1`
   color: #333;
 `
 
-export default function Home() {
-  const { t } = useTranslation()
-  console.log('NEXT_PUBLIC_ENV', process.env.NEXT_PUBLIC_ENV)
+const Description = styled.p`
+  font-size: 1.125rem;
+  color: #666;
+`
+
+export default function TestPage() {
   return (
     <PageContainer>
       <Main>
-        <Title>Home</Title>
+        <Title>Test</Title>
+        <Description>This is the Test page</Description>
+        <EnvIndicator />
       </Main>
     </PageContainer>
   );
 }
+
