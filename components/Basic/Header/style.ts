@@ -68,3 +68,9 @@ export const NavLink = styled(Link)<{ $active?: boolean }>`
   `}
 `
 
+export const WalletButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`
+

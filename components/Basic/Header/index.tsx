@@ -1,7 +1,8 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { HeaderContainer, Nav, Logo, NavLinks, NavLink } from './style'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { HeaderContainer, Nav, Logo, NavLinks, NavLink, WalletButtonWrapper } from './style'
 
 export default function Header() {
   const pathname = usePathname()
@@ -21,6 +22,9 @@ export default function Header() {
             Test
           </NavLink>
         </NavLinks>
+        <WalletButtonWrapper>
+          <ConnectButton />
+        </WalletButtonWrapper>
       </Nav>
     </HeaderContainer>
   )

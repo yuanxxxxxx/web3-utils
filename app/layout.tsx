@@ -3,6 +3,7 @@ import "./globals.css";
 import StyledComponentsRegistry from "@/lib/registry";
 import StoreProvider from "@/store/StoreProvider";
 import I18nProvider from "@/lib/I18nProvider";
+import Web3Provider from "@/lib/web3/Web3Provider";
 import Header from "@/components/Basic/Header";
 
 export const metadata: Metadata = {
@@ -20,10 +21,12 @@ export default function RootLayout({
       <body>
         <StoreProvider>
           <I18nProvider>
-            <StyledComponentsRegistry>
-              <Header />
-              {children}
-            </StyledComponentsRegistry>
+            <Web3Provider>
+              <StyledComponentsRegistry>
+                <Header />
+                {children}
+              </StyledComponentsRegistry>
+            </Web3Provider>
           </I18nProvider>
         </StoreProvider>
       </body>

@@ -31,7 +31,6 @@ const Title = styled.h1`
 
 export default function Home() {
   const { t } = useTranslation()
-  console.log('NEXT_PUBLIC_ENV', process.env.NEXT_PUBLIC_ENV)
   return (
     <PageContainer>
       <Main>
