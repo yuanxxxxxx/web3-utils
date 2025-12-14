@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:test": "cp .env.test .env && next dev",
-    "dev:prod": "cp .env.production .env && next dev",
-    "build:test": "cp .env.test .env && next build",
-    "build:prod": "cp .env.production .env && next build",
-    "export:test": "cp .env.test .env && next build",
-    "export:prod": "cp .env.production .env && next build",
+    "dev:test": "cp .env.test .env && next dev --webpack",
+    "dev:prod": "cp .env.production .env && next dev --webpack",
+    "build:test": "cp .env.test .env && next build --webpack",
+    "build:prod": "cp .env.production .env && next build --webpack",
+    "export:test": "cp .env.test .env && next build --webpack",
+    "export:prod": "cp .env.production .env && next build --webpack",
     "lint": "eslint"
   },
   "dependencies": {
     "@base-org/account": "^2.5.0",
     "@coinbase/wallet-sdk": "^4.3.7",
+    "@gemini-wallet/core": "^0.3.2",
     "@metamask/sdk": "^0.34.0",
     "@rainbow-me/rainbowkit": "^2.2.10",
     "@reduxjs/toolkit": "^2.11.1",
@@ -22,10 +23,12 @@
     "@tanstack/react-query": "^5.90.12",
     "@walletconnect/ethereum-provider": "^2.23.1",
     "bignumber.js": "^9.3.1",
+    "crypto-browserify": "^3.12.1",
     "ethers": "^6.16.0",
     "i18next": "^25.7.2",
     "moment": "^2.30.1",
     "next": "16.0.10",
+    "porto": "^0.2.37",
     "rc-tooltip": "^6.4.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
@@ -33,6 +36,7 @@
     "react-redux": "^9.2.0",
     "siwe": "^3.0.0",
     "styled-components": "^6.1.19",
+    "tap": "^21.5.0",
     "viem": "^2.41.2",
     "wagmi": "^3.1.0",
     "web3": "^4.16.0"
@@ -44,6 +48,7 @@
     "@types/styled-components": "^5.1.36",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "ignore-loader": "^0.1.2",
     "typescript": "^5"
   }
 }
