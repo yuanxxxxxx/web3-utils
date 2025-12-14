@@ -1,26 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { styled } from "styled-components";
 import Header from "@/components/Basic/Header";
+import { LayoutContent, LayoutParent } from "./style";
+import BigNumber from "bignumber.js";
+import "@/public/styles/reset.css";
 
-const LayoutParent = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-`;
+// 处理Bignumbe.js自然数最大值问题
+BigNumber.config({
+  CRYPTO: true,
+  DECIMAL_PLACES: 100,
+  EXPONENTIAL_AT: [-20, 40]
+});
 
-const LayoutContent = styled.div`
-  flex: 1;
-  overflow-y: auto;
-`;
-
-export default function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ClientLayout({children}: {children: React.ReactNode}) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

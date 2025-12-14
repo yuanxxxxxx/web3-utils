@@ -42,8 +42,10 @@ export const NavLink = styled(Link)<{ $active?: boolean }>`
   text-decoration: none;
   color: ${props => props.theme.primary};
   font-weight: ${props => props.$active 
-    ? 'semibold' 
-    : 'medium'};
+    ? '700' 
+    : '500'};
+    
+    
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;

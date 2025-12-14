@@ -1,5 +1,6 @@
 import { mainnet, sepolia } from 'wagmi/chains'
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
+import erc20Abi from './abis/erc20.json'
 
 const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV
 console.log('NEXT_PUBLIC_ENV', process.env.NEXT_PUBLIC_ENV)
@@ -16,4 +17,21 @@ export const WEBSITE_CONFIG = {
   appName: "Next App",
   walletConnectProjectId: "5e6165e29599e1c722b21aba02b7de8b",//https://cloud.walletconnect.com/
   supperChains: [mainnet, sepolia],
+
+  //IPFS Pinada配置
+  pinadaConfig : {
+    apiKey: '448a4e008327d0394388',
+    apiSecret: 'c71ac064aa851db8fc179f7a923e801a14b2ea04b649dfef4bd3dfcda898e210',
+    jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI5OGIxY2QxMS0wZGI0LTQ2MzQtYTU5OS1jM2JkOGZiZmRmOTMiLCJlbWFpbCI6IjMxODU5MTEwMkBxcS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJGUkExIn0seyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJOWUMxIn1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiNDQ4YTRlMDA4MzI3ZDAzOTQzODgiLCJzY29wZWRLZXlTZWNyZXQiOiJjNzFhYzA2NGFhODUxZGI4ZmMxNzlmN2E5MjNlODAxYTE0YjJlYTA0YjY0OWRmZWY0YmQzZGZjZGE4OThlMjEwIiwiZXhwIjoxNzk2MzUzMTcwfQ.xq1cuU5miQEIalbKc48CAf0HMYsh0yOTxHBiuNMtHj4',
+    apiUrl: 'https://api.pinata.cloud',
+    // fileUrl: 'https://nftstorage.link/ipfs',
+    // fileUrl: 'https://gateway.pinata.cloud/ipfs/',
+    fileUrl: 'https://fuchsia-tragic-mastodon-173.mypinata.cloud/ipfs/',
+  }
 }
+
+// 其他声明
+export const MAX_UINT256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+export const MAX_UINT48 = '0xFFFFFFFFFFFF'
+export const MAX_UINT160 = '0xffffffffffffffffffffffffffffffffffffffff'
+export const ERC20_ABI = erc20Abi
