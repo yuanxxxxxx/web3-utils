@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { HeaderContainer, Nav, Logo, NavLinks, NavLink, WalletButtonWrapper } from './style'
@@ -23,7 +24,7 @@ export default function Header() {
           </NavLink>
         </NavLinks>
         <WalletButtonWrapper>
-          <ConnectButton />
+           <ConnectButton />
         </WalletButtonWrapper>
       </Nav>
     </HeaderContainer>
