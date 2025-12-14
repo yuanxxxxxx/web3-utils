@@ -53,7 +53,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleDarkMode, setLanguage } from '@/store/appSlice'
 
 function MyComponent() {
-  const { isDarkMode, language } = useAppSelector((state) => state.app)
+  const { language } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
 
   return (

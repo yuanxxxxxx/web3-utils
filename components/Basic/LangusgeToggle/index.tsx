@@ -2,11 +2,11 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { setLanguage } from '@/store/appSlice'
 import { LanguageToggleContainer, Select } from './style'
 export default function LanguageToggle() {
-  const { isDarkMode, language } = useAppSelector((state) => state.app)
+  const {language } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
   return (
     <LanguageToggleContainer>
-    <Select 
+    <Select
           value={language}
           onChange={(e) => dispatch(setLanguage(e.target.value as any))}
         >

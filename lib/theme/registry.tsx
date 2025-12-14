@@ -3,8 +3,10 @@
 import React, { useState } from 'react'
 import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components'
-import { lightTheme, darkTheme } from './theme/theme'
+import { lightTheme, darkTheme } from './theme'
 import { useAppSelector } from '@/store/hooks'
+import { IAppState } from '@/store/appSlice'
+import { THEME_ENUM } from '@/types'
 
 export default function StyledComponentsRegistry({
   children,
@@ -12,9 +14,9 @@ export default function StyledComponentsRegistry({
   children: React.ReactNode
 }) {
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
-  const isDarkMode = useAppSelector((state) => state.app.isDarkMode)
+  const {theme} = useAppSelector(({app}: {app: IAppState}) => app)
   
-  const theme = isDarkMode ? darkTheme : lightTheme
+  const themeObject = theme === THEME_ENUM.dark ? darkTheme : lightTheme
 
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
@@ -24,7 +26,7 @@ export default function StyledComponentsRegistry({
 
   if (typeof window !== 'undefined') {
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeObject}>
         {children}
       </ThemeProvider>
     )
@@ -32,7 +34,7 @@ export default function StyledComponentsRegistry({
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeObject}>
         {children}
       </ThemeProvider>
     </StyleSheetManager>

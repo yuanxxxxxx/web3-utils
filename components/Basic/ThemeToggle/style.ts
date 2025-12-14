@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ToggleButton = styled.button<{ $isDark: boolean }>`
+export const ToggleButton = styled.button`
   position: relative;
   width: 60px;
   height: 32px;

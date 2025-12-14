@@ -1,20 +1,21 @@
 'use client'
 
-import React from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { toggleDarkMode } from '@/store/appSlice'
+import { IAppState, setTheme } from '@/store/appSlice'
 import { ToggleButton, IconWrapper } from './style'
+import { THEME_ENUM } from '@/types'
 
 export default function ThemeToggle() {
   const dispatch = useAppDispatch()
-  const isDarkMode = useAppSelector((state) => state.app.isDarkMode)
+  const theme = useAppSelector(({app}: {app: IAppState}) => app.theme)
 
+  const isDarkMode = theme === THEME_ENUM.dark
   const handleToggle = () => {
-    dispatch(toggleDarkMode())
+    dispatch(setTheme(theme === THEME_ENUM.dark ? THEME_ENUM.light : THEME_ENUM.dark))
   }
 
   return (
-    <ToggleButton onClick={handleToggle} $isDark={isDarkMode}>
+    <ToggleButton onClick={handleToggle} >
       <IconWrapper $isDark={isDarkMode}>
         {isDarkMode ? '🌙' : '☀️'}
       </IconWrapper>

@@ -1,34 +1,32 @@
+import { LANGUAGE_ENUM, THEME_ENUM } from '@/types'
+import { WEBSITE_CONFIG } from '@/types/constant'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type Language = 'zh' | 'en'
 
-interface AppState {
-  isDarkMode: boolean
-  language: Language
+export interface IAppState {
+  theme: THEME_ENUM
+  language: LANGUAGE_ENUM
 }
 
-const initialState: AppState = {
-  isDarkMode: false,
-  language: 'zh',
+const initialState: IAppState = {
+  theme: WEBSITE_CONFIG.defaultTheme,
+  language: WEBSITE_CONFIG.defaultLanguage,
 }
 
 export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    toggleDarkMode: (state) => {
-      state.isDarkMode = !state.isDarkMode
+    setTheme: (state, action: PayloadAction<THEME_ENUM>) => {
+      state.theme = action.payload
     },
-    setDarkMode: (state, action: PayloadAction<boolean>) => {
-      state.isDarkMode = action.payload
-    },
-    setLanguage: (state, action: PayloadAction<Language>) => {
+    setLanguage: (state, action: PayloadAction<LANGUAGE_ENUM>) => {
       state.language = action.payload
     },
   },
 })
 
-export const { toggleDarkMode, setDarkMode, setLanguage } = appSlice.actions
+export const { setTheme, setLanguage } = appSlice.actions
 
 export default appSlice.reducer
 
