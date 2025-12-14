@@ -5,10 +5,9 @@
   "scripts": {
     "dev:test": "cp .env.test .env && next dev --webpack",
     "dev:prod": "cp .env.production .env && next dev --webpack",
-    "build:test": "cp .env.test .env && next build --webpack",
-    "build:prod": "cp .env.production .env && next build --webpack",
-    "export:test": "cp .env.test .env && next build --webpack",
-    "export:prod": "cp .env.production .env && next build --webpack",
+    "build:test": "cp .env.test .env && next build --webpack && npm run clean:txt",
+    "build:prod": "cp .env.production .env && next build --webpack && npm run clean:txt",
+    "clean:txt": "find out -name '*.txt' -type f -delete",
     "lint": "eslint"
   },
   "dependencies": {
@@ -17,6 +16,7 @@
     "@gemini-wallet/core": "^0.3.2",
     "@metamask/sdk": "^0.34.0",
     "@rainbow-me/rainbowkit": "^2.2.10",
+    "@react-native-async-storage/async-storage": "^1.24.0",
     "@reduxjs/toolkit": "^2.11.1",
     "@safe-global/safe-apps-provider": "^0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",

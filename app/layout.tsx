@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import StyledComponentsRegistry from "@/lib/registry";
 import StoreProvider from "@/store/StoreProvider";
 import I18nProvider from "@/lib/I18nProvider";
