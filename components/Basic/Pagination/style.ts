@@ -14,7 +14,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
 
   .pagination-info {
     font-size: ${({ $size }) => ($size === "small" ? "12px" : "14px")};
-    color: ${({ theme }) => theme.text2};
+    color: #000;
     font-weight: 400;
   }
 
@@ -39,10 +39,10 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid ${({ theme }) => theme.border};
+    border: 1px solid #E0E0E0;
     border-radius: ${({ $size }) => ($size === "small" ? "6px" : "8px")};
-    background: ${({ theme }) => theme.bg2};
-    color: ${({ theme }) => theme.text1};
+    background: #F5F5F5;
+    color: #000;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -52,9 +52,9 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     padding: ${({ $size }) => ($size === "small" ? "0 6px" : "0 8px")};
 
     &:hover {
-      border-color: ${({ theme }) => theme.inputBorder};
-      background: ${({ theme }) => theme.bg3};
-      color: ${({ theme }) => theme.text1};
+      border-color: #E0E0E0;
+      background: #F5F5F5;
+      color: #000;
     }
 
     a {
@@ -70,14 +70,14 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   }
 
   .rc-pagination-item-active {
-    border-color: ${({ theme }) => theme.primary};
-    background: ${({ theme }) => theme.primary};
+    border-color: #000;
+    background: #000;
     color: #ffffff;
     font-weight: 600;
 
     &:hover {
-      border-color: ${({ theme }) => theme.primary};
-      background: ${({ theme }) => theme.primary};
+      border-color: #000;
+      background: #000;
       color: #ffffff;
     }
   }
@@ -88,8 +88,8 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     pointer-events: none;
 
     &:hover {
-      border-color: ${({ theme }) => theme.border};
-      background: ${({ theme }) => theme.bg2};
+      border-color: #E0E0E0;
+      background: #F5F5F5;
     }
   }
 
@@ -97,7 +97,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   .rc-pagination-jump-next {
     .rc-pagination-item-container {
       .rc-pagination-item-link-icon {
-        color: ${({ theme }) => theme.text2};
+        color: #000;
         font-size: ${({ $size }) => ($size === "small" ? "10px" : "12px")};
       }
     }
@@ -105,7 +105,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     &:hover {
       .rc-pagination-item-container {
         .rc-pagination-item-link-icon {
-          color: ${({ theme }) => theme.text1};
+          color: #000;
         }
       }
     }

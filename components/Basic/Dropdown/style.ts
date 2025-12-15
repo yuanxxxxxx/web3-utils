@@ -37,7 +37,7 @@ export const DropdownButton = styled.div<{ $showMenu?: boolean; $minimal?: boole
     flex: 1;
     font-size: 14px;
     font-weight: ${({ $minimal }) => $minimal ? '600' : '500'};
-    color: ${props => props.theme.text1};
+    color: #000;
     line-height: 100%;
     white-space: nowrap;
   }

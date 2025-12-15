@@ -16,7 +16,8 @@ export const WEBSITE_CONFIG = {
   //钱包相关
   appName: "Next App",
   walletConnectProjectId: "5e6165e29599e1c722b21aba02b7de8b",//https://cloud.walletconnect.com/
-  supperChains: [mainnet, sepolia],
+  supperChains: [sepolia],
+  defaultChain: sepolia,
 
   //IPFS Pinada配置
   pinadaConfig : {
@@ -27,7 +28,13 @@ export const WEBSITE_CONFIG = {
     // fileUrl: 'https://nftstorage.link/ipfs',
     // fileUrl: 'https://gateway.pinata.cloud/ipfs/',
     fileUrl: 'https://fuchsia-tragic-mastodon-173.mypinata.cloud/ipfs/',
-  }
+  },
+
+  // 接口相关
+  API_BASE_URL: "https://api.cai.fun/testnet/api/",
+
+  // 其他配置
+  needSignLogin: true,//是否需要签名登录
 }
 
 // 其他声明
@@ -35,3 +42,7 @@ export const MAX_UINT256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffff
 export const MAX_UINT48 = '0xFFFFFFFFFFFF'
 export const MAX_UINT160 = '0xffffffffffffffffffffffffffffffffffffffff'
 export const ERC20_ABI = erc20Abi
+
+export const LOGIN_TOKEN_LOCAL_KEY = "LOGIN_TOKEN_LOCAL_KEY";
+export const LANGUAGE_LOCAL_KEY = "LANGUAGE_LOCAL_KEY";
+export const THEME_LOCAL_KEY = "THEME_LOCAL_KEY";

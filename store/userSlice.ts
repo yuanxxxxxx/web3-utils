@@ -1,44 +1,39 @@
+import { IUserInfo, IUserState } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface UserInfo {
-  id: string
-  name: string
-  email: string
-  avatar?: string
-  role?: string
-}
 
-interface UserState {
-  userInfo: UserInfo | null
-  isLoggedIn: boolean
-}
-
-const initialState: UserState = {
-  userInfo: null,
-  isLoggedIn: false,
-}
+const initialState: IUserState = {
+  evmAddress: '',
+  loginToken: '',
+  userInfo: undefined,
+};
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserInfo: (state, action: PayloadAction<UserInfo>) => {
-      state.userInfo = action.payload
-      state.isLoggedIn = true
+    setEvmAddress: (state, action: PayloadAction<string>) => {
+      state.evmAddress = action.payload;
     },
-    updateUserInfo: (state, action: PayloadAction<Partial<UserInfo>>) => {
-      if (state.userInfo) {
-        state.userInfo = { ...state.userInfo, ...action.payload }
-      }
+    setLoginToken: (state, action: PayloadAction<string>) => {
+      state.loginToken = action.payload;
     },
-    logout: (state) => {
-      state.userInfo = null
-      state.isLoggedIn = false
+    setUserInfo: (state, action: PayloadAction<IUserInfo | undefined>) => {
+      state.userInfo = action.payload;
+    },
+    // 清空所有用户状态
+    clearUserState: (state) => {
+      state.evmAddress = '';
+      state.loginToken = '';
+      state.userInfo = undefined;
     },
   },
 })
-
-export const { setUserInfo, updateUserInfo, logout } = userSlice.actions
-
-export default userSlice.reducer
+export const {
+  setEvmAddress,
+  setLoginToken,
+  setUserInfo,
+  clearUserState,
+} = userSlice.actions;
+export default userSlice.reducer;
 

@@ -1,12 +1,9 @@
-import { LANGUAGE_ENUM, THEME_ENUM } from '@/types'
+import { IAppState, LANGUAGE_ENUM, THEME_ENUM } from '@/types'
 import { WEBSITE_CONFIG } from '@/types/constant'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
-export interface IAppState {
-  theme: THEME_ENUM
-  language: LANGUAGE_ENUM
-}
+
 
 const initialState: IAppState = {
   theme: WEBSITE_CONFIG.defaultTheme,

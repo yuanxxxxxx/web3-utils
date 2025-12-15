@@ -30,7 +30,6 @@ const Title = styled.h1`
 `
 
 export default function Home() {
-  const { t } = useTranslation()
   return (
     <PageContainer>
       <Main>

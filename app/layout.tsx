@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: WEBSITE_CONFIG.appDescription,
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,7 +25,9 @@ export default function RootLayout({
           <I18nProvider>
             <Web3Provider>
               <StyledComponentsRegistry>
-                <ClientLayout>{children}</ClientLayout>
+                <ClientLayout>
+                  {children}
+                </ClientLayout>
               </StyledComponentsRegistry>
             </Web3Provider>
           </I18nProvider>

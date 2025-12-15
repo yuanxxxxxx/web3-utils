@@ -5,7 +5,7 @@ import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './theme'
 import { useAppSelector } from '@/store/hooks'
-import { IAppState } from '@/store/appSlice'
+import { IAppState } from '@/types'
 import { THEME_ENUM } from '@/types'
 
 export default function StyledComponentsRegistry({

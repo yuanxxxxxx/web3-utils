@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { HeaderContainer, Nav, Logo, NavLinks, NavLink, WalletButtonWrapper } from './style'
+import useActiveWeb3React from '@/hooks/useActiveWeb3React'
 
 export default function Header() {
   const pathname = usePathname()
-
+  const { openConnectModal, account, loginOut } = useActiveWeb3React()
   return (
     <HeaderContainer>
       <Nav>
@@ -24,7 +23,10 @@ export default function Header() {
           </NavLink>
         </NavLinks>
         <WalletButtonWrapper>
-           <ConnectButton />
+           {account ? <div>
+            {account}
+            <button onClick={loginOut}>Logout</button>
+           </div> : <button onClick={openConnectModal}>Connect Wallet</button>}
         </WalletButtonWrapper>
       </Nav>
     </HeaderContainer>

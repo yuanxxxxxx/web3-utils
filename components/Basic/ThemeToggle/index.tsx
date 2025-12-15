@@ -1,9 +1,9 @@
 'use client'
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { IAppState, setTheme } from '@/store/appSlice'
+import { setTheme } from '@/store/appSlice'
 import { ToggleButton, IconWrapper } from './style'
-import { THEME_ENUM } from '@/types'
+import { IAppState, THEME_ENUM } from '@/types'
 
 export default function ThemeToggle() {
   const dispatch = useAppDispatch()
