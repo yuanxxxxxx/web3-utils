@@ -127,43 +127,7 @@ export default function ExamplePage() {
         <CModal visible={showModal} onClose={() => setShowModal(false)} title="Modal"> 
           <div>Modal</div>
         </CModal>
-        <WalletOptions />
       </Main>
     </PageContainer>
   );
-}
-export function WalletOptions() {
-  const { connect } = useConnect()
-  const connectors = useConnectors()
-
-  return connectors.map((connector) => (
-    <WalletOption
-      key={connector.uid}
-      connector={connector}
-      onClick={() => connect({ connector })}
-    />
-  ))
-}
-
-function WalletOption({
-  connector,
-  onClick,
-}: {
-  connector: Connector
-  onClick: () => void
-}) {
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
-    ;(async () => {
-      const provider = await connector.getProvider()
-      setReady(!!provider)
-    })()
-  }, [connector])
-
-  return (
-    <button disabled={!ready} onClick={onClick}>
-      {connector.name}
-    </button>
-  )
 }
