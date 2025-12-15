@@ -1,60 +1,88 @@
-# 项目文档
+# 项目文档导航
 
-欢迎查看项目文档！本文档提供了项目的完整说明和开发指南。
+> 简洁、实用的 Next.js + Web3 项目开发文档
 
-## 📚 文档目录
+## 📚 文档列表
 
-- [项目结构说明](./project-structure.md) - 了解项目的目录结构和文件组织
-- [技术栈说明](./tech-stack.md) - 查看项目使用的技术和工具
-- [Redux 状态管理](./redux-guide.md) - Redux Toolkit 使用指南
-- [样式开发指南](./styling-guide.md) - styled-components 使用规范
-- [开发规范](./development-guide.md) - 代码规范和最佳实践
+### 基础篇
+1. [**项目结构**](./01-项目结构.md) - 目录说明、技术栈
+2. [**开发规范**](./02-开发规范.md) - 组件规范、代码规范、样式规范
+
+### 核心功能
+3. [**Web3 集成**](./03-Web3集成.md) - 连接钱包、读写合约、发送交易
+4. [**组件使用**](./04-组件使用.md) - 弹窗、提示、分页器、下拉菜单
+5. [**API 与工具**](./06-API与工具.md) - 请求封装、工具函数、国际化
+
+### 运维篇
+6. [**项目启动**](./05-项目启动.md) - 安装、配置、部署
+
+---
 
 ## 🚀 快速开始
 
-### 安装依赖
-
 ```bash
+# 安装依赖
 yarn install
+
+# 启动开发服务器（测试环境）
+yarn dev:test
+
+# 构建生产版本
+yarn build:prod
 ```
 
-### 运行开发服务器
+访问 [http://localhost:3000](http://localhost:3000)
 
-```bash
-yarn dev
-```
+---
 
-打开 [http://localhost:3000](http://localhost:3000) 查看应用。
+## 🔧 核心技术栈
 
-### 构建生产版本
+- **框架**: Next.js 16 + React 19 + TypeScript
+- **样式**: Styled-Components
+- **Web3**: RainbowKit + Wagmi + Viem
+- **状态**: Redux Toolkit
+- **国际化**: i18next
 
-```bash
-yarn build
-```
+---
 
-### 启动生产服务器
+## 📖 示例代码
 
-```bash
-yarn start
-```
+查看 `app/example/page.tsx` 了解完整用法：
+- Web3 连接和交易
+- 组件使用示例
+- 状态管理集成
 
-## 📦 主要功能
+---
 
-- ✅ Next.js 16 App Router
-- ✅ TypeScript 支持
-- ✅ Redux Toolkit 状态管理
-- ✅ styled-components 样式方案
-- ✅ 模块化的状态管理（app/user/counter）
-- ✅ 类型安全的开发体验
-
-## 📖 学习资源
+## 🔗 常用链接
 
 - [Next.js 文档](https://nextjs.org/docs)
-- [Redux Toolkit 文档](https://redux-toolkit.js.org/)
-- [styled-components 文档](https://styled-components.com/)
-- [TypeScript 文档](https://www.typescriptlang.org/docs/)
+- [Wagmi 文档](https://wagmi.sh/)
+- [RainbowKit 文档](https://www.rainbowkit.com/)
+- [Viem 文档](https://viem.sh/)
 
-## 🤝 贡献指南
+---
 
-请阅读 [开发规范](./development-guide.md) 了解代码规范和提交要求。
+## ⚡ 核心特性
+
+- ✅ **开箱即用的 Web3 集成** - SIWE 登录、多钱包支持
+- ✅ **完善的状态管理** - Redux Toolkit + 持久化
+- ✅ **主题切换** - Light/Dark 模式
+- ✅ **国际化** - 中英文切换
+- ✅ **API 封装** - 统一错误处理、自动鉴权
+- ✅ **工具函数** - 地址格式化、金额转换
+- ✅ **UI 组件库** - 弹窗、提示、分页器等
+
+---
+
+## 💡 开发建议
+
+1. **首次开发**：阅读 [项目结构](./01-项目结构.md) + [开发规范](./02-开发规范.md)
+2. **Web3 开发**：重点阅读 [Web3 集成](./03-Web3集成.md)
+3. **UI 开发**：参考 [组件使用](./04-组件使用.md)
+4. **遇到问题**：检查 [项目启动](./05-项目启动.md) 常见问题
+
+---
+
+**文档更新**: 2025-12-15
 

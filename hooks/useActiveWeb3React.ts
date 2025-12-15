@@ -1,9 +1,10 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { useAccount, useChainId, useClient, useConnection, useDisconnect } from "wagmi";
+import { useChainId, useClient, useConnection, useDisconnect } from "wagmi";
 import { useDispatch, useSelector } from "react-redux";
 import { IUserState } from "../types";
 import { clearUserState } from "@/store/userSlice";
 import { LOGIN_TOKEN_LOCAL_KEY } from "@/types/constant";
+import { Client } from "viem";
 
 
 export default function useActiveWeb3React() {
@@ -38,5 +39,13 @@ export default function useActiveWeb3React() {
     isConnecting,
     openConnectModal: () => openConnectModal && openConnectModal(),
     client,
+  } as {
+    account: string;
+    account_: string;
+    chainId: number;
+    loginOut: () => void;
+    isConnecting: boolean;
+    openConnectModal: () => void;
+    client: Client;
   }
 }

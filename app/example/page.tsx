@@ -7,6 +7,12 @@ import CModal from '@/components/Basic/CModal'
 import CTooltip from '@/components/Basic/CTooltip'
 import Pagination from '@/components/Basic/Pagination'
 import Dropdown from '@/components/Basic/Dropdown'
+import { useReadContracts, useSendTransactionSync } from 'wagmi'
+import { erc20Abi } from 'viem'
+import useActiveWeb3React from '@/hooks/useActiveWeb3React'
+import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { waitForTransactionReceipt } from 'viem/actions'
+import toast from 'react-hot-toast'
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -38,6 +44,60 @@ const Grid = styled.div`
 
 export default function ExamplePage() {
   const [showModal, setShowModal] = useState(false)
+  const { account, client } = useActiveWeb3React()
+  const sendTransactionSync = useSendTransactionSync()
+
+  const sepoliaUSDT = "0xCD046487465278cCE6D7eC0fE0F938eb14f5b21D"
+  const [approveLoading, setApproveLoading] = useState(false)
+  
+  const { data, refetch } = useReadContracts({
+    contracts: [
+      {
+        address: sepoliaUSDT,
+        abi: erc20Abi,
+        functionName: 'allowance',
+        args: [account as `0x${string}`, sepoliaUSDT],
+      },
+    ],
+    query: {
+      enabled: !!account,
+    },
+  });
+
+  const allowance = data?.[0]?.result as bigint
+
+  const writeContract = useWriteContract()
+
+  const onApprove = async () => {
+    setApproveLoading(true)
+    try {
+      
+    const hash = await writeContract.mutateAsync({
+      address: sepoliaUSDT as `0x${string}`,
+      abi: erc20Abi,
+      functionName: 'approve',
+      args: [sepoliaUSDT, BigInt(1000000000000000000)],
+    });
+
+    // 等待交易确认
+    const receipt = await waitForTransactionReceipt(client, {
+      hash,
+      confirmations: 1,
+      pollingInterval: 1000,
+    });
+
+    if (receipt.status === 'success') {
+      toast.success('Approve successfully!', { id: `approve` });
+    }
+    } catch (error) {
+      
+    } finally {
+      setApproveLoading(false)
+    }
+  }
+  const onQueryAllowance = () => {
+    refetch()
+  }
   return (
     <PageContainer>
       <Main>
@@ -45,6 +105,9 @@ export default function ExamplePage() {
         <Grid>
           <AppSettings />
         </Grid>
+        <button onClick={onApprove} disabled={approveLoading}>{approveLoading ? 'Approveing...' : 'Approve'}</button>
+        <button onClick={onQueryAllowance}>Query Allowance</button>
+        <p>Allowance: {allowance}</p>
         <button onClick={() => setShowModal(true)}>Open Modal</button>
         <CTooltip overlay="Tooltip" strokeColor="#000" />
         <Pagination current={1} total={100} pageSize={10} onChange={() => {}} />

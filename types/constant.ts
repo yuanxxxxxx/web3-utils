@@ -1,9 +1,9 @@
 import { mainnet, sepolia } from 'wagmi/chains'
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
-import erc20Abi from './abis/erc20.json'
 
 const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV
 console.log('NEXT_PUBLIC_ENV', process.env.NEXT_PUBLIC_ENV)
+const isProduction = NEXT_PUBLIC_ENV === 'production'
 
 export const WEBSITE_CONFIG = {
   //网站相关
@@ -11,7 +11,6 @@ export const WEBSITE_CONFIG = {
   appDescription: "Create by Next App",
   defaultLanguage: LANGUAGE_ENUM.en,
   defaultTheme: THEME_ENUM.light,
-
 
   //钱包相关
   appName: "Next App",
@@ -41,7 +40,6 @@ export const WEBSITE_CONFIG = {
 export const MAX_UINT256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 export const MAX_UINT48 = '0xFFFFFFFFFFFF'
 export const MAX_UINT160 = '0xffffffffffffffffffffffffffffffffffffffff'
-export const ERC20_ABI = erc20Abi
 
 export const LOGIN_TOKEN_LOCAL_KEY = "LOGIN_TOKEN_LOCAL_KEY";
 export const LANGUAGE_LOCAL_KEY = "LANGUAGE_LOCAL_KEY";
