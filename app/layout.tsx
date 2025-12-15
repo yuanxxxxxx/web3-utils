@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/theme/registry";
-import StoreProvider from "@/store/StoreProvider";
+import StoreProvider from "@/lib/store/StoreProvider";
 import I18nProvider from "@/lib/I18nProvider";
 import Web3Provider from "@/lib/web3/Web3Provider";
 import ClientLayout from "@/components/Basic/ClientLayout";

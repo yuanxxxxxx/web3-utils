@@ -2,7 +2,7 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useChainId, useClient, useConnection, useDisconnect } from "wagmi";
 import { useDispatch, useSelector } from "react-redux";
 import { IUserState } from "../types";
-import { clearUserState } from "@/store/userSlice";
+import { clearUserState } from "@/lib/store/userSlice";
 import { LOGIN_TOKEN_LOCAL_KEY } from "@/types/constant";
 import { Client } from "viem";
 

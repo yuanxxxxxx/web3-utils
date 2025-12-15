@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {LANGUAGE_ENUM, THEME_ENUM} from "../types";
 import {LANGUAGE_LOCAL_KEY, THEME_LOCAL_KEY} from "../types/constant";
 import {useDispatch} from "react-redux";
-import { setLanguage, setTheme } from "@/store/appSlice";
+import { setLanguage, setTheme } from "@/lib/store/appSlice";
 
 export default function useLocalData(){
   const dispatch = useDispatch()

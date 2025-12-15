@@ -2,7 +2,7 @@ import { useConnection, useSignMessage } from "wagmi";
 import { IUserState } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useRef } from "react";
-import { setEvmAddress, setLoginToken, setUserInfo } from "@/store/userSlice";
+import { setEvmAddress, setLoginToken, setUserInfo } from "@/lib/store/userSlice";
 import lodash from 'lodash';
 import { WEBSITE_CONFIG, LOGIN_TOKEN_LOCAL_KEY } from "../types/constant";
 import useActiveWeb3React from "./useActiveWeb3React";

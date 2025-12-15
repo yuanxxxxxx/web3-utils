@@ -1,7 +1,7 @@
 'use client'
 
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setTheme } from '@/store/appSlice'
+import { useAppDispatch, useAppSelector } from '@/lib/store/hooks'
+import { setTheme } from '@/lib/store/appSlice'
 import { ToggleButton, IconWrapper } from './style'
 import { IAppState, THEME_ENUM } from '@/types'
 

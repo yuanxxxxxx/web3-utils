@@ -2,12 +2,12 @@
 
 import styled from 'styled-components'
 import AppSettings from '@/components/AppSettingsPage'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CModal from '@/components/Basic/CModal'
 import CTooltip from '@/components/Basic/CTooltip'
 import Pagination from '@/components/Basic/Pagination'
 import Dropdown from '@/components/Basic/Dropdown'
-import { useReadContracts, useSendTransactionSync } from 'wagmi'
+import { Connector, useConnect, useConnectors, useReadContracts, useSendTransactionSync } from 'wagmi'
 import { erc20Abi } from 'viem'
 import useActiveWeb3React from '@/hooks/useActiveWeb3React'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
@@ -127,8 +127,43 @@ export default function ExamplePage() {
         <CModal visible={showModal} onClose={() => setShowModal(false)} title="Modal"> 
           <div>Modal</div>
         </CModal>
+        <WalletOptions />
       </Main>
     </PageContainer>
   );
 }
+export function WalletOptions() {
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
+  return connectors.map((connector) => (
+    <WalletOption
+      key={connector.uid}
+      connector={connector}
+      onClick={() => connect({ connector })}
+    />
+  ))
+}
+
+function WalletOption({
+  connector,
+  onClick,
+}: {
+  connector: Connector
+  onClick: () => void
+}) {
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    ;(async () => {
+      const provider = await connector.getProvider()
+      setReady(!!provider)
+    })()
+  }, [connector])
+
+  return (
+    <button disabled={!ready} onClick={onClick}>
+      {connector.name}
+    </button>
+  )
+}

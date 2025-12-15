@@ -1,5 +1,5 @@
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { setLanguage } from '@/store/appSlice'
+import { useAppSelector, useAppDispatch } from '@/lib/store/hooks'
+import { setLanguage } from '@/lib/store/appSlice'
 import { LanguageToggleContainer, Select } from './style'
 export default function LanguageToggle() {
   const {language } = useAppSelector((state) => state.app)
