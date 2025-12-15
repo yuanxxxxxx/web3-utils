@@ -20,16 +20,16 @@ export const DropdownButton = styled.div<{ $showMenu?: boolean; $minimal?: boole
   justify-content: space-between;
   gap: ${({ $minimal }) => $minimal ? '6px' : '8px'};
   padding: ${({ $minimal }) => $minimal ? '8px 12px' : '10px 14px'};
-  background: ${({ theme, $minimal }) => $minimal ? 'transparent' : theme.inputBg};
+  background: ${({ theme, $minimal }) => $minimal ? 'transparent' : '#f5f5f5'};
   border: 1px solid ${({ $showMenu, theme, $minimal }) => 
-    $minimal ? 'transparent' : ($showMenu ? theme.inputBorder : 'transparent')};
+    $minimal ? 'transparent' : ($showMenu ? "#E0E0E0" : 'transparent')};
   border-radius: ${({ $minimal }) => $minimal ? '8px' : '10px'};
   cursor: pointer;
   user-select: none;
   transition: all 0.2s ease-in-out;
   
   &:hover {
-    border-color: ${({ theme, $minimal }) => $minimal ? 'transparent' : theme.inputBorder};
+    border-color: ${({ theme, $minimal }) => $minimal ? 'transparent' : '#E0E0E0'};
     background: ${({ $minimal }) => $minimal ? 'transparent' : '#ffffff'};
   }
   
@@ -60,7 +60,7 @@ export const DropdownMenu = styled.div<{ $showMenu: boolean }>`
     width: 100%;
     background: #ffffff;
     border-radius: 10px;
-    border: 1px solid ${props => props.theme.border};
+    border: 1px solid #E0E0E0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -74,18 +74,18 @@ export const DropdownMenuItem = styled.div<{ $active?: boolean }>`
   padding: 12px 16px;
   font-size: 14px;
   font-weight: ${({ $active }) => $active ? '600' : '500'};
-  color: ${({ $active, theme }) => $active ? theme.text1 : theme.text2};
+  color: ${({ $active, theme }) => $active ? '#000' : '#666'};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  background: ${({ $active, theme }) => $active ? theme.hover1 : 'transparent'};
+  background: ${({ $active, theme }) => $active ? '#f5f5f5' : 'transparent'};
   
   &:hover {
-    background: ${props => props.theme.hover1};
-    color: ${props => props.theme.text1};
+    background: #f5f5f5;
+    color: #000;
   }
   
   &:not(:last-child) {
-    border-bottom: 1px solid ${props => props.theme.border};
+    border-bottom: 1px solid #E0E0E0;
   }
 `;
 

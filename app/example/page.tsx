@@ -6,6 +6,7 @@ import { useState } from 'react'
 import CModal from '@/components/Basic/CModal'
 import CTooltip from '@/components/Basic/CTooltip'
 import Pagination from '@/components/Basic/Pagination'
+import Dropdown from '@/components/Basic/Dropdown'
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -47,7 +48,7 @@ export default function ExamplePage() {
         <button onClick={() => setShowModal(true)}>Open Modal</button>
         <CTooltip overlay="Tooltip" strokeColor="#000" />
         <Pagination current={1} total={100} pageSize={10} onChange={() => {}} />
-
+        <Dropdown value="1" options={[{label: '1', value: '1'}, {label: '2', value: '2'}]} onChange={() => {}} />
         <CModal visible={showModal} onClose={() => setShowModal(false)} title="Modal"> 
           <div>Modal</div>
         </CModal>

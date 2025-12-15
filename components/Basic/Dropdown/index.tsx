@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import Arrow1 from '/public/image/icon/arrow1.svg';
-import styled from 'styled-components';
+import Arrow1 from '@/public/images/icon/arrow.svg';
 import { DropdownButton, DropdownContainer, DropdownMenu, DropdownMenuItem } from './style';
 
 interface DropdownProps {
