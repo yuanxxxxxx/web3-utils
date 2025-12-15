@@ -2,17 +2,13 @@ import styled from 'styled-components'
 import Link from 'next/link'
 
 export const HeaderContainer = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
+  
   background-color: ${props => props.theme.bg1};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 20px;
+  box-sizing: border-box;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 `
@@ -22,6 +18,7 @@ export const Nav = styled.nav`
   align-items: center;
   gap: 20px;
   width: 100%;
+  flex-wrap: wrap;
 `
 
 export const Logo = styled.div`

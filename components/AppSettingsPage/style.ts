@@ -3,8 +3,10 @@ import styled from 'styled-components'
 export const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -13,21 +15,21 @@ export const SettingsContainer = styled.div`
 `
 
 export const SettingsTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: 14px;
   font-weight: bold;
   color: #333;
   margin: 0;
   border-bottom: 2px solid #e5e7eb;
-  padding-bottom: 0.75rem;
+  padding-bottom: 12px;
 `
 
 export const SettingItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 12px;
   background: #f9fafb;
-  border-radius: 10px;
+  border-radius: 8px;
   transition: all 0.2s ease;
 
   &:hover {
@@ -38,23 +40,23 @@ export const SettingItem = styled.div`
 export const SettingLabel = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 4px;
 `
 
 export const LabelText = styled.span`
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
 `
 
 export const LabelDescription = styled.span`
-  font-size: 0.875rem;
+  font-size: 12px;
   color: #6b7280;
 `
 
 export const ToggleSwitch = styled.button<{ $active: boolean }>`
-  width: 52px;
-  height: 28px;
+  width: 40px;
+  height: 24px;
   border-radius: 14px;
   border: none;
   cursor: pointer;
@@ -67,8 +69,8 @@ export const ToggleSwitch = styled.button<{ $active: boolean }>`
     position: absolute;
     top: 2px;
     left: ${props => props.$active ? '26px' : '2px'};
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: white;
     transition: all 0.3s ease;
@@ -82,7 +84,7 @@ export const ToggleSwitch = styled.button<{ $active: boolean }>`
 
 export const Select = styled.select`
   padding: 5px 10px;
-  font-size: 0.875rem;
+  font-size: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: white;

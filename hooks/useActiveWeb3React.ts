@@ -30,6 +30,16 @@ export default function useActiveWeb3React() {
     // 清除本地存储的 Token
     localStorage.removeItem(LOGIN_TOKEN_LOCAL_KEY)
   }
+  const onOpenConnectModal = async() => {
+    if (isConnecting) {
+      await disconnect.mutateAsync()
+     setTimeout(() => {
+      openConnectModal && openConnectModal()
+     }, 100)
+    }else{
+      openConnectModal && openConnectModal()
+    }
+  }
   
   return {
     account: evmAddress || '',
@@ -37,7 +47,7 @@ export default function useActiveWeb3React() {
     chainId,
     loginOut,
     isConnecting,
-    openConnectModal: () => openConnectModal && openConnectModal(),
+    openConnectModal: onOpenConnectModal,
     client,
   } as {
     account: string;

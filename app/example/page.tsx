@@ -13,6 +13,7 @@ import useActiveWeb3React from '@/hooks/useActiveWeb3React'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { waitForTransactionReceipt } from 'viem/actions'
 import toast from 'react-hot-toast'
+import { fromValue, toValue } from '@/utils/format'
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -23,15 +24,14 @@ const PageContainer = styled.div`
 const Main = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 10px;
+  box-sizing: border-box;
 `
 const SectionTitle = styled.h2`
-  font-size: 1.75rem;
+  font-size: 14px;
   font-weight: bold;
   color: #333;
-  margin: 3rem 0 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 3px solid #0070f3;
+ 
 `
 
 const Grid = styled.div`
@@ -45,9 +45,10 @@ const Grid = styled.div`
 export default function ExamplePage() {
   const [showModal, setShowModal] = useState(false)
   const { account, client } = useActiveWeb3React()
-  const sendTransactionSync = useSendTransactionSync()
+  const [amount, setAmount] = useState<string>('')
 
   const sepoliaUSDT = "0xCD046487465278cCE6D7eC0fE0F938eb14f5b21D"
+  const spender = "0x0000000000000000000000000000000000000000"
   const [approveLoading, setApproveLoading] = useState(false)
   
   const { data, refetch } = useReadContracts({
@@ -56,7 +57,13 @@ export default function ExamplePage() {
         address: sepoliaUSDT,
         abi: erc20Abi,
         functionName: 'allowance',
-        args: [account as `0x${string}`, sepoliaUSDT],
+        args: [account as `0x${string}`, spender],
+      },
+      {
+        address: sepoliaUSDT,
+        abi: erc20Abi,
+        functionName: 'decimals',
+        args: [],
       },
     ],
     query: {
@@ -64,11 +71,15 @@ export default function ExamplePage() {
     },
   });
 
-  const allowance = data?.[0]?.result as bigint
-
+  const allowance = String(data?.[0]?.result as bigint || 0)
+  const decimals = Number(data?.[1]?.result as number || 0)
   const writeContract = useWriteContract()
 
   const onApprove = async () => {
+    if (!amount) {
+      toast.error('Please enter the amount', { id: `amount` });
+      return
+    }
     setApproveLoading(true)
     try {
       
@@ -76,7 +87,7 @@ export default function ExamplePage() {
       address: sepoliaUSDT as `0x${string}`,
       abi: erc20Abi,
       functionName: 'approve',
-      args: [sepoliaUSDT, BigInt(1000000000000000000)],
+      args: [spender, BigInt(toValue(amount, decimals))],
     });
 
     // 等待交易确认
@@ -105,9 +116,10 @@ export default function ExamplePage() {
         <Grid>
           <AppSettings />
         </Grid>
+        <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
         <button onClick={onApprove} disabled={approveLoading}>{approveLoading ? 'Approveing...' : 'Approve'}</button>
         <button onClick={onQueryAllowance}>Query Allowance</button>
-        <p>Allowance: {allowance}</p>
+        <p>Allowance: {fromValue(allowance, decimals, 4)}</p>
         <button onClick={() => setShowModal(true)}>Open Modal</button>
         <CTooltip overlay="Tooltip" strokeColor="#000" />
         <Pagination current={1} total={100} pageSize={10} onChange={() => {}} />

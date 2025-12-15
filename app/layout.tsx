@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/theme/registry";
 import StoreProvider from "@/store/StoreProvider";
@@ -10,6 +10,13 @@ import { WEBSITE_CONFIG } from "@/types/constant";
 export const metadata: Metadata = {
   title: WEBSITE_CONFIG.appTitle,
   description: WEBSITE_CONFIG.appDescription,
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 

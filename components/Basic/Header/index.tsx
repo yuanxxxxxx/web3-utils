@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { HeaderContainer, Nav, Logo, NavLinks, NavLink, WalletButtonWrapper } from './style'
 import useActiveWeb3React from '@/hooks/useActiveWeb3React'
+import { toFormatAccount } from '@/utils/format'
 
 export default function Header() {
   const pathname = usePathname()
@@ -24,7 +25,7 @@ export default function Header() {
         </NavLinks>
         <WalletButtonWrapper>
            {account ? <div>
-            {account}
+            {toFormatAccount(account)}
             <button onClick={loginOut}>Logout</button>
            </div> : <button onClick={openConnectModal}>Connect Wallet</button>}
         </WalletButtonWrapper>
