@@ -2,6 +2,10 @@
 
 import styled from 'styled-components'
 import AppSettings from '@/components/AppSettingsPage'
+import { useState } from 'react'
+import CModal from '@/components/Basic/CModal'
+import CTooltip from '@/components/Basic/CTooltip'
+import Pagination from '@/components/Basic/Pagination'
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -32,6 +36,7 @@ const Grid = styled.div`
 
 
 export default function ExamplePage() {
+  const [showModal, setShowModal] = useState(false)
   return (
     <PageContainer>
       <Main>
@@ -39,7 +44,13 @@ export default function ExamplePage() {
         <Grid>
           <AppSettings />
         </Grid>
+        <button onClick={() => setShowModal(true)}>Open Modal</button>
+        <CTooltip overlay="Tooltip" strokeColor="#000" />
+        <Pagination current={1} total={100} pageSize={10} onChange={() => {}} />
 
+        <CModal visible={showModal} onClose={() => setShowModal(false)} title="Modal"> 
+          <div>Modal</div>
+        </CModal>
       </Main>
     </PageContainer>
   );

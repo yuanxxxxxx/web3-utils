@@ -32,3 +32,33 @@ html, body {
   font-size: 14px;
   
 }
+
+.rc-tooltip-inner{
+  background-color: #ffffff!important;
+  border: 1px solid #FFFFFF33!important;
+  border-radius: 16px!important;
+  padding: 16px!important;
+  box-sizing: border-box!important;
+}
+.rc-tooltip-arrow{
+  border-width: 0 8px 8px!important;
+  margin-left: -8px!important;
+  border-bottom-color: #ffffff!important;
+  border-left-color: transparent!important;
+  border-right-color: transparent!important;
+  top: 2px!important;
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: solid transparent;
+    border-width: 0 8px 8px;
+    border-bottom-color: #ffffff;
+    top: -1px;
+    left: -8px;
+    z-index: -1;
+  }
+}

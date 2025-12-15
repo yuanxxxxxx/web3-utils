@@ -1,7 +1,6 @@
 'use client'
 
 import styled from 'styled-components'
-import { EnvIndicator } from '@/components/Basic/EnvIndicator'
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
@@ -39,7 +38,6 @@ export default function TestPage() {
       <Main>
         <Title>Test</Title>
         <Description>This is the Test page</Description>
-        <EnvIndicator />
       </Main>
     </PageContainer>
   );

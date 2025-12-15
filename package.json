@@ -28,6 +28,7 @@
     "moment": "^2.30.1",
     "next": "16.0.10",
     "porto": "^0.2.37",
+    "rc-pagination": "^5.1.0",
     "rc-tooltip": "^6.4.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
