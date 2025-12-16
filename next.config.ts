@@ -44,6 +44,9 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    unoptimized: true, // Amplify 静态部署必须
+  }
 };
 
 export default nextConfig;
