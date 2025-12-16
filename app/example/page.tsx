@@ -113,7 +113,7 @@ export default function ExamplePage() {
   return (
     <PageContainer>
       <Main>
-        <SectionTitle>⚙️ 应用设置 & 用户信息</SectionTitle>
+        <SectionTitle>⚙️ 应用设置 & 用户信息--{ isProduction() ? '生产环境' : '测试环境'}</SectionTitle>
         <Grid>
           <AppSettings />
         </Grid>

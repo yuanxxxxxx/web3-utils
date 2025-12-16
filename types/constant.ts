@@ -1,4 +1,4 @@
-import { mainnet, sepolia } from 'wagmi/chains'
+import { bsc, sepolia } from 'wagmi/chains'
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
 
 const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV
@@ -15,8 +15,8 @@ export const WEBSITE_CONFIG = {
   //钱包相关
   appName: "Next App",
   walletConnectProjectId: "5e6165e29599e1c722b21aba02b7de8b",//https://cloud.walletconnect.com/
-  supperChains: [sepolia],
-  defaultChain: sepolia,
+  supperChains: isProduction ? [bsc] : [sepolia],
+  defaultChain: isProduction ? bsc : sepolia,
 
   //IPFS Pinada配置
   pinadaConfig : {
