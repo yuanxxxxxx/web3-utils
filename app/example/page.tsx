@@ -14,6 +14,7 @@ import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { waitForTransactionReceipt } from 'viem/actions'
 import toast from 'react-hot-toast'
 import { fromValue, toValue } from '@/utils/format'
+import { isProduction } from '@/lib/env'
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -47,8 +48,8 @@ export default function ExamplePage() {
   const { account, client } = useActiveWeb3React()
   const [amount, setAmount] = useState<string>('')
 
-  const sepoliaUSDT = "0xCD046487465278cCE6D7eC0fE0F938eb14f5b21D"
-  const spender = "0x0000000000000000000000000000000000000000"
+  const sepoliaUSDT = isProduction() ? '0x55d398326f99059ff775485246999027b3197955' : "0xCD046487465278cCE6D7eC0fE0F938eb14f5b21D"
+  const spender = "0x233F04c2A13F8C19535E1e6662EA28741B4EC0f5"
   const [approveLoading, setApproveLoading] = useState(false)
   
   const { data, refetch } = useReadContracts({
