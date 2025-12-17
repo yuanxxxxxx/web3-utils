@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:test": "cp .env.test .env && next dev --webpack",
-    "dev:prod": "cp .env.production .env && next dev --webpack",
-    "build:test": "cp .env.test .env && next build --webpack && npm run clean:txt",
-    "build:prod": "cp .env.production .env && next build --webpack && npm run clean:txt",
-    "clean:txt": "find out -name '*.txt' -type f -delete",
+    "dev:test": "cross-env NEXT_PUBLIC_APP_ENV=test next dev --webpack -p 3333",
+    "dev:prod": "cross-env NEXT_PUBLIC_APP_ENV=production next dev --webpack -p 3333",
+    "build:test": "cross-env NEXT_PUBLIC_APP_ENV=test next build --webpack",
+    "build:prod": "cross-env NEXT_PUBLIC_APP_ENV=production next build --webpack",
+    "start": "next start",
+    "clean:txt": "find .next -name '*.txt' -type f -delete",
     "lint": "eslint"
   },
   "dependencies": {
@@ -51,6 +52,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
     "ignore-loader": "^0.1.2",
+    "cross-env": "^10.1.0",
     "typescript": "^5"
   }
 }

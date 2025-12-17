@@ -5,7 +5,7 @@
 
 // 获取当前环境
 export const getEnv = () => {
-  return process.env.NEXT_PUBLIC_ENV || 'local';
+  return process.env.NEXT_PUBLIC_APP_ENV;
 };
 
 // 判断是否为生产环境

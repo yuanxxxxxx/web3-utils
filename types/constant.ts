@@ -1,9 +1,9 @@
 import { bsc, sepolia } from 'wagmi/chains'
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
 
-const NEXT_PUBLIC_ENV = process.env.NEXT_PUBLIC_ENV
-console.log('NEXT_PUBLIC_ENV', process.env.NEXT_PUBLIC_ENV)
-const isProduction = NEXT_PUBLIC_ENV === 'production'
+const NEXT_PUBLIC_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV
+console.log('NEXT_PUBLIC_APP_ENV', process.env.NEXT_PUBLIC_APP_ENV)
+const isProduction = NEXT_PUBLIC_APP_ENV === 'production'
 
 export const WEBSITE_CONFIG = {
   //网站相关
