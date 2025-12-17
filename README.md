@@ -7,7 +7,8 @@
 - [技术栈说明](./docs/tech-stack.md)
 - [样式开发指南](./docs/styling-guide.md)
 - [Redux 状态管理](./docs/redux-guide.md)
-
+## 部署文档
+默认使用aws amply进行SSR部署
 ## Learn More
 - 
 [wagmi文档](https://wagmi.sh/react/api/hooks/useWriteContract)
@@ -15,4 +16,4 @@
 
 ## 脚手架在线示例
 
-[https://new-web3-cli-eha2.vercel.app/](https://new-web3-cli-eha2.vercel.app/)
+[https://new-web3-cli-j7uf.vercel.app/](https://new-web3-cli-j7uf.vercel.app/)

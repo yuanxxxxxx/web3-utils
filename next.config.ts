@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // output: 'export',
+  output: 'standalone',
+  reactStrictMode: true,
   webpack: function (config, options) {
     config.experiments = {
       asyncWebAssembly: true,
@@ -45,8 +47,9 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   images: {
-    unoptimized: true, // Amplify 静态部署必须
-  }
+    unoptimized: false, // Amplify 静态部署必须
+  },
+
 };
 
 export default nextConfig;

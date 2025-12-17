@@ -1,0 +1,43 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+      #- nvm install 18.18.0
+      #- nvm use 18.18.0
+        - yarn install
+    build:
+      commands:
+        - if [ "${AWS_BRANCH}" = "main" ]; then yarn run build:prod; fi
+        - if [ "${AWS_BRANCH}" = "preprod" ]; then yarn run build:prod; fi
+        - if [ "${AWS_BRANCH}" = "test" ]; then yarn run build:test; fi
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+
+# 关键：启用 SSR 需配置 server 阶段（Amplify 会自动识别 Next.js SSR，但若未自动生成需手动加）
+server:
+  phases:
+    preBuild:
+      commands:
+        - yarn install
+    build:
+      commands:
+        - if [ "${AWS_BRANCH}" = "main" ]; then yarn run build:prod; fi
+        - if [ "${AWS_BRANCH}" = "preprod" ]; then yarn run build:prod; fi
+        - if [ "${AWS_BRANCH}" = "test" ]; then yarn run build:test; fi
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+# 运行时配置（Next.js SSR 需指定启动命令）
+appRoot: .
+runtimeVersion:
+  nodejs: 23.8.0  # 匹配 Next.js 要求的 Node 版本（如 Next.js 14 需 Node ≥18）
