@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:test": "cross-env NEXT_PUBLIC_APP_ENV=test next dev --webpack -p 3333",
-    "dev:prod": "cross-env NEXT_PUBLIC_APP_ENV=production next dev --webpack -p 3333",
+    "dev:test": "cross-env NEXT_PUBLIC_APP_ENV=test next dev --webpack -p 3336",
+    "dev:prod": "cross-env NEXT_PUBLIC_APP_ENV=production next dev --webpack -p 3336",
     "build:test": "cross-env NEXT_PUBLIC_APP_ENV=test next build --webpack",
     "build:prod": "cross-env NEXT_PUBLIC_APP_ENV=production next build --webpack",
     "start": "next start",

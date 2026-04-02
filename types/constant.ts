@@ -1,4 +1,4 @@
-import { bsc, sepolia } from 'wagmi/chains'
+import { bsc, sepolia, polygon, arbitrum, optimism, base, avalanche } from 'wagmi/chains'
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
 
 const NEXT_PUBLIC_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV
@@ -7,16 +7,16 @@ const isProduction = NEXT_PUBLIC_APP_ENV === 'production'
 
 export const WEBSITE_CONFIG = {
   //网站相关
-  appTitle: "Next App",
-  appDescription: "Create by Next App",
+  appTitle: "Web3工具🔧",
+  appDescription: "Create by Evm合约调用工具",
   defaultLanguage: LANGUAGE_ENUM.en,
   defaultTheme: THEME_ENUM.light,
 
   //钱包相关
-  appName: "Next App",
+  appName: "Evm合约调用工具",
   walletConnectProjectId: "5e6165e29599e1c722b21aba02b7de8b",//https://cloud.walletconnect.com/
-  supperChains: isProduction ? [bsc] : [sepolia],
-  defaultChain: isProduction ? bsc : sepolia,
+  supperChains: [sepolia, bsc, polygon, arbitrum, optimism, base, avalanche],
+  defaultChain: sepolia,
 
   //IPFS Pinada配置
   pinadaConfig : {
@@ -30,7 +30,7 @@ export const WEBSITE_CONFIG = {
   },
 
   // 接口相关
-  API_BASE_URL: "https://api.cai.fun/testnet/api/",
+  API_BASE_URL: "",
 
   // 其他配置
   needSignLogin: true,//是否需要签名登录

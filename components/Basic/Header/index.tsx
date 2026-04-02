@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { HeaderContainer, Nav, Logo, NavLinks, NavLink, WalletButtonWrapper } from './style'
 import useActiveWeb3React from '@/hooks/useActiveWeb3React'
 import { toFormatAccount } from '@/utils/format'
+import { WEBSITE_CONFIG } from '@/types/constant'
 
 export default function Header() {
   const pathname = usePathname()
@@ -11,24 +12,15 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Nav>
-        <Logo>Next App</Logo>
+        <Logo>{WEBSITE_CONFIG.appTitle}</Logo>
         <NavLinks>
           <NavLink href="/" $active={pathname === '/'}>
-            Home
+            首页
           </NavLink>
-          <NavLink href="/example" $active={pathname === '/example'}>
-            Example
-          </NavLink>
-          <NavLink href="/test" $active={pathname === '/test'}>
-            Test
+          <NavLink href="/contract" $active={pathname === '/contract'}>
+            Evm合约调用工具
           </NavLink>
         </NavLinks>
-        <WalletButtonWrapper>
-           {account ? <div>
-            {toFormatAccount(account)}
-            <button onClick={loginOut}>Logout</button>
-           </div> : <button onClick={openConnectModal}>Connect Wallet</button>}
-        </WalletButtonWrapper>
       </Nav>
     </HeaderContainer>
   )
