@@ -14,6 +14,6 @@
 [wagmi文档](https://wagmi.sh/react/api/hooks/useWriteContract)
 [rainbowkit中文文档](https://rainbowkit.com/zh-CN/docs/introduction)
 
-## 脚手架在线示例
+## 线上地址
 
-[https://new-web3-cli-j7uf.vercel.app/](https://new-web3-cli-j7uf.vercel.app/)
+[https://web3-utils-seven.vercel.app/](https://web3-utils-seven.vercel.app/)
