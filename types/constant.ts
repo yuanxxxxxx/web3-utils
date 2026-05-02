@@ -33,7 +33,7 @@ export const WEBSITE_CONFIG = {
   API_BASE_URL: "",
 
   // 其他配置
-  needSignLogin: true,//是否需要签名登录
+  needSignLogin: false,//是否需要签名登录
 }
 
 // 其他声明
