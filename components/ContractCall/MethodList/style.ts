@@ -101,7 +101,15 @@ export const CardHeader = styled.div<{ $type?: 'read' | 'write' | 'payable' }>`
     p.$type === 'payable' ? '#fffaeb' : p.$type === 'write' ? '#fff7ed' : '#f0fdf4'};
   border-bottom: 1px solid #e4e7ec;
   cursor: pointer;
-  user-select: none;
+  user-select: text;
+`
+
+export const HeaderTitleGroup = styled.span`
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 4px;
+  min-width: 0;
 `
 
 export const FunctionName = styled.span`
@@ -109,6 +117,46 @@ export const FunctionName = styled.span`
   font-weight: 700;
   color: #101828;
   font-family: 'Roboto', monospace;
+`
+
+export const MethodHashSuffix = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  color: #98a2b3;
+  font-family: 'Roboto', monospace;
+`
+
+export const HeaderActions = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  user-select: none;
+`
+
+export const HeaderIconBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  color: #667085;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+
+  &:hover {
+    border-color: #667eff;
+    color: #667eff;
+    background: #f5f7ff;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 `
 
 export const MutabilityBadge = styled.span<{ $type: 'view' | 'pure' | 'nonpayable' | 'payable' }>`
@@ -138,6 +186,112 @@ export const CollapseIcon = styled.span<{ $open?: boolean }>`
   font-size: 12px;
   transform: ${(p) => (p.$open ? 'rotate(180deg)' : 'rotate(0)')};
   transition: transform 0.2s;
+  user-select: none;
+  flex-shrink: 0;
+`
+
+/** 参数解析弹窗 */
+export const DecodeModalBody = styled.div`
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`
+
+export const DecodeInputRow = styled.div`
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+`
+
+export const DecodeHexInput = styled.input`
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  font-size: 12px;
+  font-family: 'Roboto', monospace;
+  color: #101828;
+  outline: none;
+
+  &:focus {
+    border-color: #667eff;
+    box-shadow: 0 0 0 3px #667eff26;
+  }
+`
+
+export const DecodeParseBtn = styled.button`
+  flex-shrink: 0;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: none;
+  background: #667eff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #4f5fe8;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+`
+
+export const DecodeOutputBox = styled.div<{ $variant?: 'result' | 'error' }>`
+  margin: 0;
+  min-height: 120px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid ${(p) => (p.$variant === 'error' ? '#fda29b' : '#e4e7ec')};
+  background: #f9fafb;
+  font-size: 12px;
+  font-family: 'Roboto', 'Courier New', monospace;
+  color: ${(p) => (p.$variant === 'error' ? '#b42318' : 'inherit')};
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.65;
+`
+
+export const DecodeResultLine = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+  padding: 3px 0;
+  column-gap: 0;
+`
+
+export const DecodeResultLabel = styled.span`
+  color: #667085;
+  font-weight: 500;
+  flex-shrink: 0;
+`
+
+export const DecodeResultSep = styled.span`
+  color: #667085;
+  flex-shrink: 0;
+`
+
+export const DecodeResultValue = styled.span`
+  color: #101828;
+  word-break: break-all;
+  min-width: 0;
+`
+
+export const DecodePlaceholderText = styled.span`
+  color: #98a2b3;
+`
+
+export const DecodeOkSingleLine = styled.span`
+  color: #101828;
 `
 
 export const CardBody = styled.div`

@@ -1,12 +1,27 @@
 'use client'
 
-import { useState } from 'react'
-import { ParsedMethod, AbiInput, getInputPlaceholder, parseInputValue, formatOutputValue } from '@/utils/abi'
+import { useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
+import CModal from '@/components/Basic/CModal'
+import {
+  ParsedMethod,
+  AbiInput,
+  getInputPlaceholder,
+  parseInputValue,
+  formatOutputValue,
+  getFunctionSelector,
+  decodeMethodCalldataRows,
+  type DecodeCalldataRow,
+} from '@/utils/abi'
 import { CallResult } from '@/hooks/useContractCall'
 import {
   CardWrapper,
   CardHeader,
+  HeaderTitleGroup,
   FunctionName,
+  MethodHashSuffix,
+  HeaderActions,
+  HeaderIconBtn,
   MutabilityBadge,
   CollapseIcon,
   CardBody,
@@ -37,6 +52,17 @@ import {
   TxMeta,
   TxMetaItem,
   LoadingSpinner,
+  DecodeModalBody,
+  DecodeInputRow,
+  DecodeHexInput,
+  DecodeParseBtn,
+  DecodeOutputBox,
+  DecodeResultLine,
+  DecodeResultLabel,
+  DecodeResultSep,
+  DecodeResultValue,
+  DecodePlaceholderText,
+  DecodeOkSingleLine,
 } from './style'
 
 interface MethodCardProps {
@@ -51,6 +77,11 @@ interface MethodCardProps {
     options?: { force?: boolean }
   ) => Promise<CallResult>
 }
+
+type DecodePanelState =
+  | { mode: 'idle' }
+  | { mode: 'error'; message: string }
+  | { mode: 'ok'; rows: DecodeCalldataRow[] }
 
 // 单个参数的输入控件
 function ParameterInput({
@@ -145,7 +176,7 @@ export default function MethodCard({
   explorerUrl,
   onCall,
 }: MethodCardProps) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [inputValues, setInputValues] = useState<string[]>(
     method.inputs.map((inp) => (inp.type === 'bool' ? 'false' : ''))
   )
@@ -154,6 +185,24 @@ export default function MethodCard({
   const [forceLoading, setForceLoading] = useState(false)
   const [result, setResult] = useState<CallResult | null>(null)
   const [isForceResult, setIsForceResult] = useState(false)
+  const [decodeModalOpen, setDecodeModalOpen] = useState(false)
+  const [decodeHex, setDecodeHex] = useState('')
+  const [decodePanel, setDecodePanel] = useState<DecodePanelState>({ mode: 'idle' })
+
+  const selector = useMemo(() => {
+    try {
+      return getFunctionSelector(method)
+    } catch {
+      return ''
+    }
+  }, [method])
+
+  useEffect(() => {
+    if (!decodeModalOpen) {
+      setDecodeHex('')
+      setDecodePanel({ mode: 'idle' })
+    }
+  }, [decodeModalOpen])
 
   const isRead = method.isReadOnly
   const isPayable = method.stateMutability === 'payable'
@@ -207,6 +256,33 @@ export default function MethodCard({
   const canCall = contractReady && (isRead || callerReady)
   const anyLoading = loading || forceLoading
 
+  const handleCopyMethodName = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    try {
+      await navigator.clipboard.writeText(method.name)
+      toast.success('已复制方法名')
+    } catch {
+      toast.error('复制失败')
+    }
+  }
+
+  const handleOpenDecode = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setDecodeModalOpen(true)
+  }
+
+  const handleParseCalldata = () => {
+    try {
+      const rows = decodeMethodCalldataRows(method, decodeHex)
+      setDecodePanel({ mode: 'ok', rows })
+    } catch (err) {
+      setDecodePanel({
+        mode: 'error',
+        message: err instanceof Error ? err.message : '解析失败',
+      })
+    }
+  }
+
   const formatResult = (): string => {
     if (!result) return ''
     if (!result.success) return result.error || '调用失败'
@@ -230,7 +306,31 @@ export default function MethodCard({
   return (
     <CardWrapper>
       <CardHeader $type={cardType} onClick={() => setOpen((p) => !p)}>
-        <FunctionName>{method.name}</FunctionName>
+        <HeaderTitleGroup>
+          <FunctionName>{method.name}</FunctionName>
+          {selector ? <MethodHashSuffix> ({selector})</MethodHashSuffix> : null}
+        </HeaderTitleGroup>
+        <HeaderActions>
+          <HeaderIconBtn
+            type="button"
+            title="复制方法名"
+            aria-label="复制方法名"
+            onClick={handleCopyMethodName}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+          </HeaderIconBtn>
+          <HeaderIconBtn
+            type="button"
+            title="参数解析"
+            aria-label="参数解析"
+            onClick={handleOpenDecode}
+          >
+            <span style={{ fontSize: 11, fontFamily: 'monospace', fontWeight: 700 }}>&gt;_</span>
+          </HeaderIconBtn>
+        </HeaderActions>
         <MutabilityBadge $type={method.stateMutability}>
           {method.stateMutability}
         </MutabilityBadge>
@@ -246,6 +346,45 @@ export default function MethodCard({
         )}
         <CollapseIcon $open={open}>▼</CollapseIcon>
       </CardHeader>
+
+      <CModal
+        visible={decodeModalOpen}
+        onClose={() => setDecodeModalOpen(false)}
+        title={`参数解析 - ${method.name}`}
+        width={720}
+        padding="0"
+      >
+        <DecodeModalBody>
+          <DecodeInputRow>
+            <DecodeHexInput
+              value={decodeHex}
+              onChange={(e) => setDecodeHex(e.target.value)}
+              placeholder="0x..."
+            />
+            <DecodeParseBtn type="button" onClick={handleParseCalldata}>
+              解析
+            </DecodeParseBtn>
+          </DecodeInputRow>
+          <DecodeOutputBox $variant={decodePanel.mode === 'error' ? 'error' : 'result'}>
+            {decodePanel.mode === 'idle' && (
+              <DecodePlaceholderText>解析结果将显示在此处</DecodePlaceholderText>
+            )}
+            {decodePanel.mode === 'error' && decodePanel.message}
+            {decodePanel.mode === 'ok' && decodePanel.rows.length === 0 && (
+              <DecodeOkSingleLine>（无参数）</DecodeOkSingleLine>
+            )}
+            {decodePanel.mode === 'ok' &&
+              decodePanel.rows.length > 0 &&
+              decodePanel.rows.map((row, i) => (
+                <DecodeResultLine key={i}>
+                  <DecodeResultLabel>{row.label}</DecodeResultLabel>
+                  <DecodeResultSep>: </DecodeResultSep>
+                  <DecodeResultValue>{row.value}</DecodeResultValue>
+                </DecodeResultLine>
+              ))}
+          </DecodeOutputBox>
+        </DecodeModalBody>
+      </CModal>
 
       {open && (
         <CardBody>
