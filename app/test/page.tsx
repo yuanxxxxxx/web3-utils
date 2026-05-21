@@ -3,11 +3,10 @@
 import styled from 'styled-components'
 const PageContainer = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: 100%;
   align-items: center;
   justify-content: center;
   background-color: #f5f5f5;
-  padding-top: 64px;
 `
 
 const Main = styled.main`

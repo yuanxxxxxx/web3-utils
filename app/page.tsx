@@ -1,40 +1,42 @@
 'use client'
 
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
+import ToolCardList from '@/components/Home/ToolCardList'
+import { WEBSITE_CONFIG } from '@/types/constant'
 
 const PageContainer = styled.div`
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  padding-top: 64px;
+  min-height: 100%;
+  background-color: #f5f7fa;
 `
 
 const Main = styled.main`
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  box-sizing: border-box;
 `
 
-const Title = styled.h1`
-  font-size: 2.25rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #333;
+const PageTitle = styled.h1`
+  font-size: 24px;
+  font-weight: 700;
+  color: #101828;
+  margin: 0 0 8px;
+`
+
+const PageDesc = styled.p`
+  font-size: 14px;
+  color: #667085;
+  margin: 0 0 32px;
 `
 
 export default function Home() {
   return (
     <PageContainer>
       <Main>
-        <Title>Home</Title>
+        <PageTitle>{WEBSITE_CONFIG.appTitle}</PageTitle>
+        <PageDesc>{WEBSITE_CONFIG.appDescription}</PageDesc>
+        <ToolCardList />
       </Main>
     </PageContainer>
-  );
+  )
 }

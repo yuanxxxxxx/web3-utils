@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import ContractCallTool from '@/components/ContractCall'
 
 const PageContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #f5f7fa;
-  padding-top: 64px;
 `
 
 const Main = styled.main`

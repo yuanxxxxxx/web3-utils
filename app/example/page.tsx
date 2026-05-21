@@ -17,9 +17,8 @@ import { fromValue, toValue } from '@/utils/format'
 import { isProduction } from '@/lib/env'
 
 const PageContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #f5f5f5;
-  padding-top: 64px;
 `
 
 const Main = styled.main`

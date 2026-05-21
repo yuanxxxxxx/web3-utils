@@ -2,7 +2,6 @@ import { bsc, sepolia, polygon, arbitrum, optimism, base, avalanche } from 'wagm
 import { LANGUAGE_ENUM, THEME_ENUM } from '.'
 
 const NEXT_PUBLIC_APP_ENV = process.env.NEXT_PUBLIC_APP_ENV
-console.log('NEXT_PUBLIC_APP_ENV', process.env.NEXT_PUBLIC_APP_ENV)
 const isProduction = NEXT_PUBLIC_APP_ENV === 'production'
 
 export const WEBSITE_CONFIG = {
@@ -44,3 +43,37 @@ export const MAX_UINT160 = '0xffffffffffffffffffffffffffffffffffffffff'
 export const LOGIN_TOKEN_LOCAL_KEY = "LOGIN_TOKEN_LOCAL_KEY";
 export const LANGUAGE_LOCAL_KEY = "LANGUAGE_LOCAL_KEY";
 export const THEME_LOCAL_KEY = "THEME_LOCAL_KEY";
+
+export interface IExternalTool {
+  name: string
+  url: string
+  icon?: string
+}
+
+export const EXTERNAL_TOOLS: IExternalTool[] = [
+  {
+    name: 'DNS验证工具',
+    url: 'https://dnschecker.org/all-dns-records-of-domain.php',
+    icon: '🌐',
+  },
+  {
+    name: 'XLSX转JSON',
+    url: 'https://kinoar.github.io/xlsx-to-json/',
+    icon: '📊',
+  },
+  {
+    name: '一键抠图',
+    url: 'https://remove.photos/zh-cn/',
+    icon: '✂️',
+  },
+  {
+    name: '文档转换',
+    url: 'https://www.aconvert.com/cn/document/',
+    icon: '📄',
+  },
+  {
+    name: 'SVG图标',
+    url: 'https://www.potlabicons.com/',
+    icon: '🎨',
+  },
+]
