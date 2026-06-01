@@ -20,6 +20,8 @@ interface Props {
   callerReady: boolean
   explorerUrl?: (hash: string, type: 'tx' | 'address') => string
   onCall: (functionName: string, args: unknown[], ethValue?: string, options?: { force?: boolean }) => Promise<CallResult>
+  onRawRead: (rawData: string) => Promise<CallResult>
+  onRawWrite: (rawData: string, ethValue?: string, options?: { force?: boolean }) => Promise<CallResult>
 }
 
 export default function MethodList({
@@ -29,6 +31,8 @@ export default function MethodList({
   callerReady,
   explorerUrl,
   onCall,
+  onRawRead,
+  onRawWrite,
 }: Props) {
   const [activeTab, setActiveTab] = useState<'read' | 'write'>('read')
 
@@ -74,6 +78,8 @@ export default function MethodList({
               callerReady={callerReady}
               explorerUrl={explorerUrl}
               onCall={onCall}
+              onRawRead={onRawRead}
+              onRawWrite={onRawWrite}
             />
           ))
         )}

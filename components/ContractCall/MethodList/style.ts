@@ -607,3 +607,69 @@ export const LoadingSpinner = styled.span`
     }
   }
 `
+
+// --- Raw 数据模式 ---
+
+export const InputModeToggle = styled.div`
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #e4e7ec;
+  border-radius: 8px;
+  overflow: hidden;
+  align-self: flex-start;
+`
+
+export const InputModeBtn = styled.button<{ $active?: boolean }>`
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: ${(p) => (p.$active ? '600' : '400')};
+  color: ${(p) => (p.$active ? '#fff' : '#667085')};
+  background: ${(p) => (p.$active ? '#667eff' : 'transparent')};
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${(p) => (p.$active ? '#667eff' : '#f2f4f7')};
+    color: ${(p) => (p.$active ? '#fff' : '#344054')};
+  }
+`
+
+export const RawSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+export const RawCalldataTextarea = styled.textarea`
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #d0d5dd;
+  font-size: 12px;
+  font-family: 'Roboto', 'Courier New', monospace;
+  color: #101828;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: 1.6;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #667eff;
+    box-shadow: 0 0 0 3px #667eff26;
+  }
+
+  &::placeholder {
+    color: #98a2b3;
+  }
+`
+
+export const RawHint = styled.p`
+  font-size: 11px;
+  color: #98a2b3;
+  margin: 0;
+  line-height: 1.5;
+`

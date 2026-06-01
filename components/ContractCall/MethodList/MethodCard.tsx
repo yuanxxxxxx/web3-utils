@@ -63,6 +63,11 @@ import {
   DecodeResultValue,
   DecodePlaceholderText,
   DecodeOkSingleLine,
+  InputModeToggle,
+  InputModeBtn,
+  RawSection,
+  RawCalldataTextarea,
+  RawHint,
 } from './style'
 
 interface MethodCardProps {
@@ -76,6 +81,8 @@ interface MethodCardProps {
     ethValue?: string,
     options?: { force?: boolean }
   ) => Promise<CallResult>
+  onRawRead: (rawData: string) => Promise<CallResult>
+  onRawWrite: (rawData: string, ethValue?: string, options?: { force?: boolean }) => Promise<CallResult>
 }
 
 type DecodePanelState =
@@ -175,8 +182,11 @@ export default function MethodCard({
   callerReady,
   explorerUrl,
   onCall,
+  onRawRead,
+  onRawWrite,
 }: MethodCardProps) {
   const [open, setOpen] = useState(false)
+  const [inputMode, setInputMode] = useState<'abi' | 'raw'>('abi')
   const [inputValues, setInputValues] = useState<string[]>(
     method.inputs.map((inp) => (inp.type === 'bool' ? 'false' : ''))
   )
@@ -188,6 +198,11 @@ export default function MethodCard({
   const [decodeModalOpen, setDecodeModalOpen] = useState(false)
   const [decodeHex, setDecodeHex] = useState('')
   const [decodePanel, setDecodePanel] = useState<DecodePanelState>({ mode: 'idle' })
+  // Raw 模式专用状态
+  const [rawCalldata, setRawCalldata] = useState('')
+  const [rawEthValue, setRawEthValue] = useState('')
+  const [rawLoading, setRawLoading] = useState(false)
+  const [rawForceLoading, setRawForceLoading] = useState(false)
 
   const selector = useMemo(() => {
     try {
@@ -250,6 +265,25 @@ export default function MethodCard({
       setResult(res)
     } finally {
       setForceLoading(false)
+    }
+  }
+
+  const handleRawCall = async (force = false) => {
+    if (force) {
+      setRawForceLoading(true)
+    } else {
+      setRawLoading(true)
+    }
+    setIsForceResult(force)
+    setResult(null)
+    try {
+      const res = isRead
+        ? await onRawRead(rawCalldata)
+        : await onRawWrite(rawCalldata, rawEthValue || undefined, force ? { force: true } : undefined)
+      setResult(res)
+    } finally {
+      setRawLoading(false)
+      setRawForceLoading(false)
     }
   }
 
@@ -388,7 +422,93 @@ export default function MethodCard({
 
       {open && (
         <CardBody>
-          {method.inputs.length > 0 && (
+          {/* 输入模式切换 */}
+          <InputModeToggle>
+            <InputModeBtn
+              type="button"
+              $active={inputMode === 'abi'}
+              onClick={() => { setInputMode('abi'); setResult(null) }}
+            >
+              ABI 参数
+            </InputModeBtn>
+            <InputModeBtn
+              type="button"
+              $active={inputMode === 'raw'}
+              onClick={() => { setInputMode('raw'); setResult(null) }}
+            >
+              Raw 数据
+            </InputModeBtn>
+          </InputModeToggle>
+
+          {/* Raw 数据模式 */}
+          {inputMode === 'raw' && (
+            <RawSection>
+              <RawCalldataTextarea
+                value={rawCalldata}
+                onChange={(e) => setRawCalldata(e.target.value)}
+                placeholder={'输入原始 calldata，例如：\n0xa9059cbb000000000000000000000000...'}
+                spellCheck={false}
+              />
+              {!isRead && (
+                <EthValueSection>
+                  <EthValueLabel>发送 ETH（可选）</EthValueLabel>
+                  <EthValueRow>
+                    <EthValueInput
+                      value={rawEthValue}
+                      onChange={(e) => setRawEthValue(e.target.value)}
+                      placeholder="0.0"
+                      type="text"
+                    />
+                    <EthUnit>ETH</EthUnit>
+                  </EthValueRow>
+                </EthValueSection>
+              )}
+              <ActionRow>
+                {isRead ? (
+                  <QueryBtn
+                    onClick={() => handleRawCall(false)}
+                    disabled={!contractReady || rawLoading || !rawCalldata.trim()}
+                  >
+                    {rawLoading ? <><LoadingSpinner />&nbsp;查询中...</> : '查询'}
+                  </QueryBtn>
+                ) : (
+                  <>
+                    <SendBtn
+                      onClick={() => handleRawCall(false)}
+                      disabled={!contractReady || !callerReady || rawLoading || rawForceLoading || !rawCalldata.trim()}
+                    >
+                      {rawLoading ? <><LoadingSpinner />&nbsp;发送中...</> : '发送交易'}
+                    </SendBtn>
+                    <ForceSendBtn
+                      onClick={() => handleRawCall(true)}
+                      disabled={!contractReady || !callerReady || rawLoading || rawForceLoading || !rawCalldata.trim()}
+                    >
+                      {rawForceLoading ? <><LoadingSpinner />&nbsp;强制发送中...</> : '⚡ 强制发送交易'}
+                    </ForceSendBtn>
+                  </>
+                )}
+                {result && (
+                  <button
+                    onClick={() => setResult(null)}
+                    style={{ marginLeft: 'auto', padding: '6px 10px', borderRadius: 6, border: '1px solid #d0d5dd', background: '#fff', cursor: 'pointer', fontSize: 11, color: '#667085' }}
+                  >
+                    清空结果
+                  </button>
+                )}
+              </ActionRow>
+              {!isRead && (
+                <ForceTip>
+                  ⚡ <span><strong>强制发送交易</strong>：跳过 gas 估算模拟，设置 Gas Limit = 30,000,000 强行上链。即使合约会 revert，交易也会被广播到网络并消耗 gas。</span>
+                </ForceTip>
+              )}
+              <RawHint>
+                直接将原始 calldata（十六进制）发送至合约地址，不经过 ABI 编解码。
+              </RawHint>
+            </RawSection>
+          )}
+
+          {/* ABI 参数模式 */}
+          {inputMode === 'abi' && method.inputs.length > 0 && (
             <InputsSection>
               {method.inputs.map((input, idx) => (
                 <InputRow key={idx}>
@@ -406,64 +526,69 @@ export default function MethodCard({
             </InputsSection>
           )}
 
-          {isPayable && (
-            <EthValueSection>
-              <EthValueLabel>发送 ETH (payable)</EthValueLabel>
-              <EthValueRow>
-                <EthValueInput
-                  value={ethValue}
-                  onChange={(e) => setEthValue(e.target.value)}
-                  placeholder="0.0"
-                  type="text"
-                />
-                <EthUnit>ETH</EthUnit>
-              </EthValueRow>
-            </EthValueSection>
-          )}
+          {/* ABI 模式：payable ETH + 操作按钮 */}
+          {inputMode === 'abi' && (
+            <>
+              {isPayable && (
+                <EthValueSection>
+                  <EthValueLabel>发送 ETH (payable)</EthValueLabel>
+                  <EthValueRow>
+                    <EthValueInput
+                      value={ethValue}
+                      onChange={(e) => setEthValue(e.target.value)}
+                      placeholder="0.0"
+                      type="text"
+                    />
+                    <EthUnit>ETH</EthUnit>
+                  </EthValueRow>
+                </EthValueSection>
+              )}
 
-          <ActionRow>
-            {isRead ? (
-              <QueryBtn onClick={handleCall} disabled={!canCall || anyLoading}>
-                {loading ? <><LoadingSpinner /> &nbsp;查询中...</> : '查询'}
-              </QueryBtn>
-            ) : (
-              <>
-                <SendBtn onClick={handleCall} disabled={!canCall || anyLoading}>
-                  {loading ? <><LoadingSpinner /> &nbsp;发送中...</> : '发送交易'}
-                </SendBtn>
-                <ForceSendBtn onClick={handleForceCall} disabled={!canCall || anyLoading}>
-                  {forceLoading ? <><LoadingSpinner /> &nbsp;强制发送中...</> : '⚡ 强制发送交易'}
-                </ForceSendBtn>
-              </>
-            )}
-            {!contractReady && (
-              <span style={{ fontSize: 12, color: '#f04438' }}>请先填写合约地址和 ABI</span>
-            )}
-            {contractReady && !isRead && !callerReady && (
-              <span style={{ fontSize: 12, color: '#f59e0b' }}>请先连接钱包或输入私钥</span>
-            )}
-            {result && (
-              <button
-                onClick={() => setResult(null)}
-                style={{
-                  marginLeft: 'auto',
-                  padding: '6px 10px',
-                  borderRadius: 6,
-                  border: '1px solid #d0d5dd',
-                  background: '#fff',
-                  cursor: 'pointer',
-                  fontSize: 11,
-                  color: '#667085',
-                }}
-              >
-                清空结果
-              </button>
-            )}
-          </ActionRow>
-          {!isRead && (
-            <ForceTip>
-              ⚡ <span><strong>强制发送交易</strong>：跳过 gas 估算模拟，设置 Gas Limit = 30,000,000 强行上链。即使合约会 revert，交易也会被广播到网络并消耗 gas。</span>
-            </ForceTip>
+              <ActionRow>
+                {isRead ? (
+                  <QueryBtn onClick={handleCall} disabled={!canCall || anyLoading}>
+                    {loading ? <><LoadingSpinner /> &nbsp;查询中...</> : '查询'}
+                  </QueryBtn>
+                ) : (
+                  <>
+                    <SendBtn onClick={handleCall} disabled={!canCall || anyLoading}>
+                      {loading ? <><LoadingSpinner /> &nbsp;发送中...</> : '发送交易'}
+                    </SendBtn>
+                    <ForceSendBtn onClick={handleForceCall} disabled={!canCall || anyLoading}>
+                      {forceLoading ? <><LoadingSpinner /> &nbsp;强制发送中...</> : '⚡ 强制发送交易'}
+                    </ForceSendBtn>
+                  </>
+                )}
+                {!contractReady && (
+                  <span style={{ fontSize: 12, color: '#f04438' }}>请先填写合约地址和 ABI</span>
+                )}
+                {contractReady && !isRead && !callerReady && (
+                  <span style={{ fontSize: 12, color: '#f59e0b' }}>请先连接钱包或输入私钥</span>
+                )}
+                {result && (
+                  <button
+                    onClick={() => setResult(null)}
+                    style={{
+                      marginLeft: 'auto',
+                      padding: '6px 10px',
+                      borderRadius: 6,
+                      border: '1px solid #d0d5dd',
+                      background: '#fff',
+                      cursor: 'pointer',
+                      fontSize: 11,
+                      color: '#667085',
+                    }}
+                  >
+                    清空结果
+                  </button>
+                )}
+              </ActionRow>
+              {!isRead && (
+                <ForceTip>
+                  ⚡ <span><strong>强制发送交易</strong>：跳过 gas 估算模拟，设置 Gas Limit = 30,000,000 强行上链。即使合约会 revert，交易也会被广播到网络并消耗 gas。</span>
+                </ForceTip>
+              )}
+            </>
           )}
 
           {result && (

@@ -10,7 +10,7 @@ import {
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { waitForTransactionReceipt } from 'viem/actions'
-import { useWriteContract } from 'wagmi'
+import { useWriteContract, useSendTransaction } from 'wagmi'
 import { CallerMode } from '@/components/ContractCall/CallerSelector'
 
 export interface CallResult {
@@ -45,6 +45,7 @@ export default function useContractCall({
   walletPublicClient,
 }: UseContractCallParams) {
   const writeContract = useWriteContract()
+  const sendTransaction = useSendTransaction()
 
   const getPublicClient = useCallback(() => {
     return createPublicClient({
@@ -210,7 +211,99 @@ export default function useContractCall({
     }
   }
 
-  return { callRead, callWrite }
+  /**
+   * 用原始 calldata（hex）直接 eth_call，适合只读方法的 raw 模式
+   */
+  const callRawRead = useCallback(
+    async (rawData: string): Promise<CallResult> => {
+      try {
+        const hexData = rawData.trim() as `0x${string}`
+        const client = getPublicClient()
+        const result = await client.call({
+          to: contractAddress,
+          data: hexData,
+        })
+        return { success: true, data: result.data ?? '0x（无返回数据）' }
+      } catch (err: any) {
+        return { success: false, error: extractErrorMessage(err) }
+      }
+    },
+    [getPublicClient, contractAddress]
+  )
+
+  /**
+   * 用原始 calldata（hex）直接 sendTransaction，适合写入方法的 raw 模式
+   */
+  const callRawWrite = useCallback(
+    async (
+      rawData: string,
+      ethValue?: string,
+      options?: { force?: boolean }
+    ): Promise<CallResult> => {
+      const hexData = rawData.trim() as `0x${string}`
+      const value =
+        ethValue && ethValue !== '0' && ethValue !== ''
+          ? parseEther(ethValue)
+          : undefined
+      const gas = options?.force ? maxGasLmit : undefined
+
+      try {
+        if (callerMode === 'wallet') {
+          const hash = await sendTransaction.mutateAsync({
+            to: contractAddress,
+            data: hexData,
+            ...(value !== undefined ? { value } : {}),
+            ...(gas !== undefined ? { gas } : {}),
+          })
+          const client = getPublicClient()
+          const receipt = await waitForTransactionReceipt(client, {
+            hash,
+            confirmations: 1,
+            pollingInterval: 1500,
+          })
+          return {
+            success: receipt.status === 'success',
+            txHash: hash,
+            receipt: {
+              status: receipt.status,
+              gasUsed: receipt.gasUsed,
+              blockNumber: receipt.blockNumber,
+            },
+            error: receipt.status === 'reverted' ? '交易已上链但被 revert' : undefined,
+          }
+        } else {
+          const { walletClient } = getPrivateKeyWalletClient()
+          const client = getPublicClient()
+          const hash = await walletClient.sendTransaction({
+            to: contractAddress,
+            data: hexData,
+            ...(value !== undefined ? { value } : {}),
+            ...(gas !== undefined ? { gas } : {}),
+          })
+          const receipt = await waitForTransactionReceipt(client, {
+            hash,
+            confirmations: 1,
+            pollingInterval: 1500,
+          })
+          return {
+            success: receipt.status === 'success',
+            txHash: hash,
+            receipt: {
+              status: receipt.status,
+              gasUsed: receipt.gasUsed,
+              blockNumber: receipt.blockNumber,
+            },
+            error: receipt.status === 'reverted' ? '交易已上链但被 revert' : undefined,
+          }
+        }
+      } catch (err: any) {
+        return { success: false, error: extractErrorMessage(err) }
+      }
+    },
+    [callerMode, contractAddress, maxGasLmit, getPublicClient, getPrivateKeyWalletClient, sendTransaction]
+  )
+
+  return { callRead, callWrite, callRawRead, callRawWrite }
 }
 
 function extractErrorMessage(err: any): string {

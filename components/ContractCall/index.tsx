@@ -106,7 +106,7 @@ export default function ContractCallTool() {
     return false
   }, [callerMode, account, privateKey])
 
-  const { callRead, callWrite } = useContractCall({
+  const { callRead, callWrite, callRawRead, callRawWrite } = useContractCall({
     selectedChain,
     rpcUrl: selectedChainRpcUrl,
     contractAddress: contractAddress as `0x${string}`,
@@ -132,6 +132,14 @@ export default function ContractCallTool() {
       return callWrite(functionName, args, ethValue, options)
     }
   }
+
+  const handleRawRead = (rawData: string) => callRawRead(rawData)
+
+  const handleRawWrite = (
+    rawData: string,
+    ethValue?: string,
+    options?: { force?: boolean }
+  ) => callRawWrite(rawData, ethValue, options)
 
   const explorerUrlFn = (hash: string, type: 'tx' | 'address') =>
     getExplorerUrl(hash, type)
@@ -191,6 +199,8 @@ export default function ContractCallTool() {
           callerReady={callerReady}
           explorerUrl={explorerUrlFn}
           onCall={handleCall}
+          onRawRead={handleRawRead}
+          onRawWrite={handleRawWrite}
         />
       </MethodPanel>
     </ToolWrapper>
