@@ -1,7 +1,14 @@
-import styled from 'styled-components'
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export const Section = styled.section`
   width: 100%;
+`
+
+export const SectionBlock = styled.div`
+  & + & {
+    margin-top: 32px;
+  }
 `
 
 export const SectionTitle = styled.h2`
@@ -17,7 +24,7 @@ export const CardGrid = styled.div`
   gap: 16px;
 `
 
-export const ToolCard = styled.a`
+const cardCss = css`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -33,6 +40,14 @@ export const ToolCard = styled.a`
     box-shadow: 0 4px 16px rgba(102, 126, 255, 0.12);
     transform: translateY(-2px);
   }
+`
+
+export const ToolCard = styled.a`
+  ${cardCss}
+`
+
+export const InternalToolCard = styled(Link)`
+  ${cardCss}
 `
 
 export const CardTop = styled.div`

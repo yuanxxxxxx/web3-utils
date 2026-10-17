@@ -31,6 +31,11 @@ export const NavInner = styled.nav`
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 520px) {
+    gap: 8px;
+    padding: 0 12px;
+  }
 `
 
 export const LogoLink = styled(Link)`
@@ -68,11 +73,8 @@ export const LogoText = styled.span`
   letter-spacing: -0.02em;
   white-space: nowrap;
 
-  @media screen and (max-width: 480px) {
-    font-size: 15px;
-    max-width: 140px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  @media screen and (max-width: 520px) {
+    display: none;
   }
 `
 

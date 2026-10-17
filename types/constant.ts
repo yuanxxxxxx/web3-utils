@@ -44,6 +44,22 @@ export const LOGIN_TOKEN_LOCAL_KEY = "LOGIN_TOKEN_LOCAL_KEY";
 export const LANGUAGE_LOCAL_KEY = "LANGUAGE_LOCAL_KEY";
 export const THEME_LOCAL_KEY = "THEME_LOCAL_KEY";
 
+export interface IInternalTool {
+  name: string
+  href: string
+  description: string
+  icon?: string
+}
+
+export const INTERNAL_TOOLS: IInternalTool[] = [
+  {
+    name: '区块链钱包生成',
+    href: '/wallet',
+    description: '生成或导入助记词，派生地址并查询余额',
+    icon: '👛',
+  },
+]
+
 export interface IExternalTool {
   name: string
   url: string

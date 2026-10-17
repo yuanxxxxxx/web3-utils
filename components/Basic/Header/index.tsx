@@ -33,6 +33,10 @@ export default function Header() {
             <span className="full">Evm合约调用工具</span>
             <span className="short">合约工具</span>
           </NavLink>
+          <NavLink href="/wallet" $active={pathname === '/wallet'}>
+            <span className="full">区块链钱包生成</span>
+            <span className="short">钱包</span>
+          </NavLink>
         </NavLinks>
 
         <NavActions>
