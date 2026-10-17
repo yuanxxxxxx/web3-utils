@@ -53,10 +53,34 @@ export interface IInternalTool {
 
 export const INTERNAL_TOOLS: IInternalTool[] = [
   {
-    name: '区块链钱包生成',
+    name: '合约工具（EVM）',
+    href: '/contract',
+    description: '选择网络、填写合约地址和 ABI，进行读写调用',
+    icon: '📜',
+  },
+  {
+    name: '区块链钱包生成（EVM）',
     href: '/wallet',
     description: '生成或导入助记词，派生地址并查询余额',
     icon: '👛',
+  },
+  {
+    name: '区块链钱包生成（BTC）',
+    href: '/wallet/btc',
+    description: '生成或导入助记词，派生比特币地址并查询余额',
+    icon: '₿',
+  },
+  {
+    name: '区块链钱包生成（Solana）',
+    href: '/wallet/solana',
+    description: '生成或导入助记词，派生 Solana 地址并查询余额',
+    icon: '◎',
+  },
+  {
+    name: '区块链钱包生成（Tron）',
+    href: '/wallet/tron',
+    description: '生成或导入助记词，派生 Tron 地址并查询余额',
+    icon: '🔺',
   },
 ]
 

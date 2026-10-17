@@ -31,11 +31,6 @@ export const NavInner = styled.nav`
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
-
-  @media screen and (max-width: 520px) {
-    gap: 8px;
-    padding: 0 12px;
-  }
 `
 
 export const LogoLink = styled(Link)`
@@ -72,67 +67,6 @@ export const LogoText = styled.span`
     isLightTheme(props.theme.bg1) ? '#101828' : '#f9fafb'};
   letter-spacing: -0.02em;
   white-space: nowrap;
-
-  @media screen and (max-width: 520px) {
-    display: none;
-  }
-`
-
-export const NavLinks = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 10px;
-  background: ${(props) =>
-    isLightTheme(props.theme.bg1)
-      ? 'rgba(102, 126, 255, 0.06)'
-      : 'rgba(255, 255, 255, 0.06)'};
-`
-
-export const NavLink = styled(Link)<{ $active?: boolean }>`
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: ${(props) => (props.$active ? '600' : '500')};
-  color: ${(props) =>
-    props.$active
-      ? '#fff'
-      : isLightTheme(props.theme.bg1)
-        ? '#667085'
-        : '#98a2b3'};
-  padding: 7px 14px;
-  border-radius: 8px;
-  white-space: nowrap;
-  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
-  background: ${(props) =>
-    props.$active ? props.theme.primary : 'transparent'};
-  box-shadow: ${(props) =>
-    props.$active ? '0 1px 3px rgba(0, 102, 234, 0.25)' : 'none'};
-
-  &:hover {
-    color: ${(props) => (props.$active ? '#fff' : props.theme.primary)};
-    background: ${(props) =>
-      props.$active
-        ? props.theme.primary
-        : 'rgba(102, 126, 255, 0.1)'};
-  }
-
-  .short {
-    display: none;
-  }
-
-  @media screen and (max-width: 640px) {
-    padding: 7px 12px;
-    font-size: 13px;
-
-    .full {
-      display: none;
-    }
-
-    .short {
-      display: inline;
-    }
-  }
 `
 
 export const NavActions = styled.div`
